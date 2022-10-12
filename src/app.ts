@@ -1,10 +1,8 @@
 import express from "express";
-import * as dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
-
-dotenv.config();
-
+import { connectToDatabase } from "./services/database.service";
+import { servicesRouter, usersRouter } from "./routes/"
 
 const app = express();
 
@@ -14,12 +12,15 @@ const app = express();
 
 app.use(helmet());
 app.use(cors());
-app.use(express.json());
 
-app.get("/", function (req, res) {
-    res.send("Hello Worlds");
-});
+connectToDatabase().then(() => {
+    app.use("/yuva-api/services", servicesRouter);
+    app.use("/yuva-api/users", usersRouter)
 
-app.listen(process.env.PORT, () => {
-    console.log(`Listening on port ${process.env.PORT}`);
+    app.listen(process.env.PORT, () => {
+        console.log(`Server started at http://localhost:${process.env.PORT}`);
+    });
+}).catch((error: Error) => {
+    console.error("Database connection failed", error);
+    process.exit();
 });
