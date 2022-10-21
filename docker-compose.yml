@@ -1,0 +1,23 @@
+version: '3.1'
+services:
+  api:
+    container_name: yuvaapi
+    restart: always
+    build: .
+    ports:
+      - "3000:3000"
+    links:
+      - mongo
+    volumes:
+      - .:/app
+  mongo:
+    container_name: yuvamongo
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      ME_CONFIG_OPTIONS_EDITORTHEME: 3024-night
+      ME_CONFIG_BASICAUTH_USERNAME: mongoexpress
+      ME_CONFIG_BASICAUTH_PASSWORD: mongoexpress
+      ME_CONFIG_MONGODB_ADMINUSERNAME: mongoadmin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: mongoadmin
