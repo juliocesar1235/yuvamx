@@ -14,19 +14,6 @@ const mongoose = require("mongoose");
 app.use(helmet());
 app.use(cors());
 
-app.get("/user", function (req, res) {
-
-    // ir a base de datos
-    mongoose.connect('')
-
-    // pedir user
-
-    let user = {}
-
-    // regresar info del user
-
-    // si el user no se encuentra, regresar un error 404
-})
 
 app.get("/", function (req, res) {
     res.send("Hello Worlds");
