@@ -2,7 +2,7 @@
 import { ObjectId } from "mongodb";
 
 // Class Implementation
-
+//TODO: service cost property
 export default class Allocation {
     constructor(
         public contractorId: ObjectId,
