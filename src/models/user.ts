@@ -15,6 +15,14 @@ export default class User {
         public zipcode: string,
         public city: string,
         public country: string,
+        public userType: string,
+        public serviceCategory?: string,
+        public serviceId?: ObjectId,
+        public workScheduleAvailable?: object,
+        public workScheduleTaken?: object,
+        public bankName?: string,
+        public bankAccount?: string,
+        public rating?: number,
         public idProvider?: string,
         public id?: ObjectId
     ) { }
