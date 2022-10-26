@@ -2,7 +2,6 @@
 import { ObjectId } from "mongodb";
 
 // Class Implementation
-
 export default class Allocation {
     constructor(
         public contractorId: ObjectId,
@@ -15,6 +14,7 @@ export default class Allocation {
         public serviceStatus: string,
         public rating: number,
         public favorite: boolean,
+        public cost: number,
         public id?: ObjectId
     ) { }
 }

@@ -41,7 +41,7 @@ export const usersValidator = {
     "validator": {
         $jsonSchema: {
             bsonType: "object",
-            required: ["firstName", "lastName", "email", "phoneNumber", "dateOfBirth", "avatar", "address", "zipcode", "city", "country", "idProvider"],
+            required: ["firstName", "lastName", "email", "phoneNumber", "dateOfBirth", "avatar", "address", "zipcode", "city", "country", "userType"],
             additionalProperties: false,
             properties: {
                 _id: {},
@@ -85,10 +85,38 @@ export const usersValidator = {
                     bsonType: "string",
                     description: "'country' is required and is a string"
                 },
-                idProvider: {
+                userType: {
                     bsonType: "string",
-                    description: "'idProvider' is required and is a string"
-                }
+                    description: "'userType' is required and is a string"
+                },
+                serviceCategory: {
+                    bsonType: "string",
+                    description: "'serviceCategory' is required and is a string"
+                },
+                serviceId: {
+                    bsonType: "objectId",
+                    description: "'serviceId' is required and is a objectId"
+                },
+                workScheduleAvailable: {
+                    bsonType: "object",
+                    description: "'workScheduleAvailable' is required and is a object"
+                },
+                workScheduleTaken: {
+                    bsonType: "object",
+                    description: "'workScheduleTaken' is required and is a object"
+                },
+                bankName: {
+                    bsonType: "string",
+                    description: "'bankName' is required and is a string"
+                },
+                bankAccount: {
+                    bsonType: "string",
+                    description: "'bankAccount' is required and is a string"
+                },
+                rating: {
+                    bsonType: "double",
+                    description: "'rating' is required and is a string"
+                },
             }
         }
     }
