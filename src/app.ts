@@ -20,7 +20,8 @@ app.get("/", function (req, res) {
 });
 connectToDatabase().then(() => {
     app.use("/yuva-api/services", servicesRouter);
-    app.use("/yuva-api/users", usersRouter)
+    app.use("/yuva-api/users", usersRouter);
+   
 
     app.listen(process.env.PORT, () => {
         console.log(`Server started at http://localhost:${process.env.PORT}`);
