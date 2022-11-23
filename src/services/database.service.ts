@@ -1,12 +1,13 @@
 // External Dependencies
 import * as mongoDB from "mongodb";
 import * as dotenv from "dotenv";
-import { servicesValidator, usersValidator } from "./schema.validators";
+import { allocationValidator, servicesValidator, usersValidator } from "./schema.validators";
 
 // Global Variables
 export const collections: {
     services?: mongoDB.Collection,
-    users?: mongoDB.Collection
+    users?: mongoDB.Collection,
+    allocations?: mongoDB.Collection
 } = {}
 
 // Initialize Connection
@@ -21,12 +22,15 @@ export async function connectToDatabase() {
 
     await db.command(servicesValidator);
     await db.command(usersValidator);
+    await db.command(allocationValidator);
 
     const servicesCollection: mongoDB.Collection = db.collection('services');
-    const usersCollection: mongoDB.Collection = db.collection('users')
+    const usersCollection: mongoDB.Collection = db.collection('users');
+    const allocationsCollection: mongoDB.Collection = db.collection('allocations');
 
     collections.services = servicesCollection;
-    collections.users = usersCollection
+    collections.users = usersCollection;
+    collections.allocations = allocationsCollection;
 
-    console.log(`Successfully connected to database: ${db.databaseName} and collections: ${servicesCollection.collectionName}, ${usersCollection.collectionName}`);
+    console.log(`Successfully connected to database: ${db.databaseName} and collections: ${servicesCollection.collectionName}, ${usersCollection.collectionName}, ${allocationsCollection.collectionName}`);
 }

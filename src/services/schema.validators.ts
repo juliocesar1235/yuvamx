@@ -98,12 +98,20 @@ export const usersValidator = {
                     description: "'serviceId' is required and is a objectId"
                 },
                 workScheduleAvailable: {
-                    bsonType: "object",
-                    description: "'workScheduleAvailable' is required and is a object"
+                    bsonType: "array",
+                    description: "'workScheduleAvailable' is required and is a object",
+                    maxItems: 25,
+                    items: {
+                        bsonType: "date"
+                    }
                 },
                 workScheduleTaken: {
-                    bsonType: "object",
-                    description: "'workScheduleTaken' is required and is a object"
+                    bsonType: "array",
+                    description: "'workScheduleTaken' is required and is a object",
+                    maxItems: 25,
+                    items: {
+                        bsonType: "date"
+                    }
                 },
                 bankName: {
                     bsonType: "string",
@@ -116,6 +124,77 @@ export const usersValidator = {
                 rating: {
                     bsonType: "double",
                     description: "'rating' is required and is a string"
+                },
+            }
+        }
+    }
+}
+
+
+export const allocationValidator = {
+    "collMod": 'allocations',
+    "validator": {
+        $jsonSchema: {
+            bsonType: "object",
+            required: ["contractorId", "serviceId", "serviceName", "confirmedServiceDate", "completedServiceTotalTime", "serviceAddress", "serviceStatus", "cost"],
+            additionalProperties: false,
+            properties: {
+                _id: {},
+                contractorId: {
+                    bsonType: "objectId",
+                    description: "'contractorId' is required and is a objectId"
+                },
+                serviceId: {
+                    bsonType: "objectId",
+                    description: "'serviceId' is required and is a objectId"
+                },
+                serviceName: {
+                    bsonType: "string",
+                    description: "'serviceName' is required and is a string"
+                },
+                confirmedServiceDate: {
+                    bsonType: "date",
+                    description: "'confirmedServiceDate' is required and is a date"
+                },
+                completedServiceTotalTime: {
+                    bsonType: "int",
+                    description: "'completedServiceTotalTime' is required and is a int"
+                },
+                serviceAddress: {
+                    bsonType: "string",
+                    description: "'serviceAddress' is required and is a string"
+                },
+                serviceStatus: {
+                    bsonType: "string",
+                    description: "'serviceStatus' is required and is a string"
+                },
+                rating: {
+                    bsonType: "double",
+                    description: "'rating' is required and is a double"
+                },
+                cost: {
+                    bsonType: "double",
+                    description: "'cost' is required and is a double"
+                },
+                favorite: {
+                    bsonType: "bool",
+                    description: "'favorite' is required and is a bool"
+                },
+                tentativeEmployeeId: {
+                    bsonType: "objectId",
+                    description: "'tentativeEmployeeId' is required and is a objectId"
+                },
+                confirmedEmployeeId: {
+                    bsonType: "objectId",
+                    description: "'confirmedEmployeeId?' is required and is a objectId"
+                },
+                rejectedEmployees: {
+                    bsonType: "array",
+                    description: "'rejectedEmployees' is required and is a array",
+                    maxItems: 25,
+                    items: {
+                        bsonType: "objectId"
+                    }
                 },
             }
         }

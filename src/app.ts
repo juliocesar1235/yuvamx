@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import { connectToDatabase } from "./services/database.service";
-import { servicesRouter, usersRouter } from "./routes/"
+import { allocationsRouter, servicesRouter, usersRouter } from "./routes/"
 
 const app = express();
 
@@ -15,7 +15,8 @@ app.use(cors());
 
 connectToDatabase().then(() => {
     app.use("/yuva-api/services", servicesRouter);
-    app.use("/yuva-api/users", usersRouter)
+    app.use("/yuva-api/users", usersRouter);
+    app.use("/yuva-api/allocations", allocationsRouter);
 
     app.listen(process.env.PORT, () => {
         console.log(`Server started at http://localhost:${process.env.PORT}`);
