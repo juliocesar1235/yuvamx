@@ -43,12 +43,14 @@ usersRouter.get("/:id", async (req: Request, res: Response) => {
 usersRouter.post("/", async (req: Request, res: Response) => {
     try {
         const newUser = req.body as User;
-        newUser.dateOfBirth = new Date(newUser.dateOfBirth);
+        if (newUser.dateOfBirth) {
+            newUser.dateOfBirth = new Date(newUser.dateOfBirth);
+        }
         if (newUser.serviceId) {
             newUser.serviceId = new ObjectId(newUser.serviceId);
         }
         const result = await collections.users.insertOne(newUser);
-
+        console.log(result, "New user created successfully");
         result
             ? res.status(201).send(result)
             : res.status(500).send("Failed to create a new user.");

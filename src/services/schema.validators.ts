@@ -41,7 +41,7 @@ export const usersValidator = {
     "validator": {
         $jsonSchema: {
             bsonType: "object",
-            required: ["firstName", "lastName", "email", "phoneNumber", "dateOfBirth", "avatar", "address", "zipcode", "city", "country", "userType"],
+            required: ["firstName", "lastName", "email"],
             additionalProperties: false,
             properties: {
                 _id: {},
