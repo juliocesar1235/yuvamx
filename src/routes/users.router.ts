@@ -39,6 +39,23 @@ usersRouter.get("/:id", async (req: Request, res: Response) => {
     }
 });
 
+// get users by mail
+usersRouter.get("/login/:email", async (req: Request, res: Response) => {
+    const email = req?.params?.email;
+    try {
+        const query = { email: email }
+        const user: User = await collections.users.findOne<User>(query);
+        console.log('User find', user)
+
+        if (user) {
+            console.log(`Sending user: ${user.firstName}`)
+            res.status(200).send(user);
+        }
+    } catch (error) {
+        res.status(404).send(`Unable to find matching user with id: ${req.params.id}`);
+    }
+});
+
 // POST
 usersRouter.post("/", async (req: Request, res: Response) => {
     try {
@@ -69,7 +86,7 @@ usersRouter.put("/:id", async (req: Request, res: Response) => {
         const updatedUser: User = req.body as User;
         const query = { _id: new ObjectId(id) };
         updatedUser.dateOfBirth = new Date(updatedUser.dateOfBirth);
-        if(updatedUser.serviceId != null){
+        if (updatedUser.serviceId != null) {
             updatedUser.serviceId = new ObjectId(updatedUser.serviceId)
         }
         const result = await collections.users.updateOne(query, { $set: updatedUser });
