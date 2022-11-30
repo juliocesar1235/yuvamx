@@ -24,6 +24,7 @@ export default class User {
         public bankAccount?: string,
         public rating?: number,
         public idProvider?: string,
-        public id?: ObjectId
+        public favoriteServices?: Array<ObjectId>,
+        public id?: ObjectId,
     ) { }
 }
