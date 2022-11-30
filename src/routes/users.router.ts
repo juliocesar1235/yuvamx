@@ -83,16 +83,31 @@ usersRouter.put("/:id", async (req: Request, res: Response) => {
     const id = req?.params?.id;
 
     try {
-        const updatedUser: User = req.body as User;
+        const updatedUser: any = req.body as any;
+        console.log(updatedUser);
         const query = { _id: new ObjectId(id) };
-        updatedUser.dateOfBirth = new Date(updatedUser.dateOfBirth);
+        // console.log(query);
+        if (updatedUser.dateOfBirth) {
+            updatedUser.dateOfBirth = new Date(updatedUser.dateOfBirth);
+        }
         if (updatedUser.serviceId != null) {
             updatedUser.serviceId = new ObjectId(updatedUser.serviceId)
         }
-        const result = await collections.users.updateOne(query, { $set: updatedUser });
 
+        if (updatedUser.favoriteServices) {
+            let favArray: Array<ObjectId> = [];
+            let updateResult = []
+            updatedUser.favoriteServices.forEach(async (serviceId) => {
+                let objId = new ObjectId(serviceId);
+                updateResult.push(await collections.users.updateOne(query, { $addToSet: { favoriteServices: objId } }));
+            })
+            console.log('updated services', updateResult);
+            delete updatedUser.favoriteServices
+        }
+        const result = await collections.users.updateOne(query, { $set: updatedUser });
+        console.log(result);
         result
-            ? res.status(200).send(id)
+            ? res.status(200).send(result)
             : res.status(304).send(`User with id: ${id} not updated`);
     } catch (error) {
         console.error(error.message);
