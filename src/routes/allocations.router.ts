@@ -143,11 +143,11 @@ allocationsRouter.get("/history/:userid/:type", async (req: Request, res: Respon
         query = { contractorId: new ObjectId(id) };
     }
     try {
-        const allocation: Allocation = await collections.allocations.findOne<Allocation>(query);
+        const allocation: Array<Allocation> = await collections.allocations.find<Allocation>(query).toArray();
         console.log('Allocation find', allocation)
 
         if (allocation) {
-            console.log(`Sending allocation:`, allocation._id.toString())
+            console.log(`Sending allocation:`, allocation.length)
             res.status(200).send(allocation);
         }
     } catch (error) {
