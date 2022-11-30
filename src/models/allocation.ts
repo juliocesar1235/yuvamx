@@ -17,6 +17,6 @@ export default class Allocation {
         public tentativeEmployeeId?: ObjectId,
         public confirmedEmployeeId?: ObjectId,
         public rejectedEmployees?: Array<ObjectId>,
-        public id?: ObjectId
+        public _id?: ObjectId
     ) { }
 }

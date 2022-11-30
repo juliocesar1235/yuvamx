@@ -32,13 +32,14 @@ allocationsRouter.get("/:id", async (req: Request, res: Response) => {
         console.log('Allocation find', allocation)
 
         if (allocation) {
-            console.log(`Sending user:`, allocation.id)
+            console.log(`Sending allocation:`, allocation._id.toString())
             res.status(200).send(allocation);
         }
     } catch (error) {
         res.status(404).send(`Unable to find matching allocation with id: ${req.params.id}`);
     }
 });
+
 
 // POST
 allocationsRouter.post("/", async (req: Request, res: Response) => {
@@ -125,3 +126,31 @@ allocationsRouter.get("/allocation-match/:id", async (req: Request, res: Respons
         res.status(400).send(error.message);
     }
 })
+
+allocationsRouter.get("/history/:userid/:type", async (req: Request, res: Response) => {
+    const id = req?.params?.userid;
+    const type = req?.params?.type;
+    console.log(JSON.stringify(req.params));
+    if (!type) {
+        res.status(404).send('Bad request, please send the user type');
+    }
+    let query = {};
+    if (type == 'employee') {
+        query = { confirmedEmployeeId: new ObjectId(id) };
+    }
+
+    if (type == 'contractor') {
+        query = { contractorId: new ObjectId(id) };
+    }
+    try {
+        const allocation: Allocation = await collections.allocations.findOne<Allocation>(query);
+        console.log('Allocation find', allocation)
+
+        if (allocation) {
+            console.log(`Sending allocation:`, allocation._id.toString())
+            res.status(200).send(allocation);
+        }
+    } catch (error) {
+        res.status(404).send(`Unable to find matching allocation with id: ${req.params.id}`);
+    }
+});
