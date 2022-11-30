@@ -129,7 +129,7 @@ export const usersValidator = {
                     bsonType: "array",
                     description: "'favorites' is optional and is an array",
                     items: {
-                        bsonType: "string"
+                        bsonType: "objectId"
                     }
                 },
             }
