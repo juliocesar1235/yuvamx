@@ -125,6 +125,13 @@ export const usersValidator = {
                     bsonType: "double",
                     description: "'rating' is required and is a string"
                 },
+                favoriteServices: {
+                    bsonType: "array",
+                    description: "'favorites' is optional and is an array",
+                    items: {
+                        bsonType: "string"
+                    }
+                },
             }
         }
     }
