@@ -7,7 +7,8 @@ import { allocationValidator, servicesValidator, usersValidator } from "./schema
 export const collections: {
     services?: mongoDB.Collection,
     users?: mongoDB.Collection,
-    allocations?: mongoDB.Collection
+    allocations?: mongoDB.Collection,
+    invitations?: mongoDB.Collection,
 } = {}
 
 // Initialize Connection
@@ -27,10 +28,16 @@ export async function connectToDatabase() {
     const servicesCollection: mongoDB.Collection = db.collection('services');
     const usersCollection: mongoDB.Collection = db.collection('users');
     const allocationsCollection: mongoDB.Collection = db.collection('allocations');
+    const invitations: mongoDB.Collection = db.collection('invitations');
 
     collections.services = servicesCollection;
     collections.users = usersCollection;
     collections.allocations = allocationsCollection;
+    collections.invitations = invitations;
 
-    console.log(`Successfully connected to database: ${db.databaseName} and collections: ${servicesCollection.collectionName}, ${usersCollection.collectionName}, ${allocationsCollection.collectionName}`);
+    console.log(`Successfully connected to database: ${db.databaseName} and collections: 
+    ${servicesCollection.collectionName}, 
+    ${usersCollection.collectionName}, 
+    ${allocationsCollection.collectionName},
+    ${invitations}`);
 }
