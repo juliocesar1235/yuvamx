@@ -27,7 +27,7 @@ invitationRouter.get("/:id", async (req: Request, res: Response) => {
     try {
 
         const query = { _id: new ObjectId(id) };
-        const invitation = (await collections.services.findOne<Invitation>(query)) as Invitation;
+        const invitation = (await collections.invitations.findOne<Invitation>(query)) as Invitation;
         console.log('Invitation find', invitation)
 
         if (invitation) {
@@ -62,7 +62,7 @@ invitationRouter.put("/:id", async (req: Request, res: Response) => {
         const updatedInvitation: Invitation = req.body as Invitation;
         const query = { _id: new ObjectId(id) };
 
-        const result = await collections.services.updateOne(query, { $set: updatedInvitation });
+        const result = await collections.invitations.updateOne(query, { $set: updatedInvitation });
 
         result
             ? res.status(200).send(`Successfully updated invitation with id ${id}`)
