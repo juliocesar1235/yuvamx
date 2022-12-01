@@ -39,5 +39,5 @@ export async function connectToDatabase() {
     ${servicesCollection.collectionName}, 
     ${usersCollection.collectionName}, 
     ${allocationsCollection.collectionName},
-    ${invitations}`);
+    ${invitations.collectionName}`);
 }

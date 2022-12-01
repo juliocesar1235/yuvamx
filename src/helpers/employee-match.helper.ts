@@ -16,7 +16,7 @@ export async function findTentativeEmployee(scheduleBlock: Date, rejectedFilter:
     const smsClient = twilio(TWILIO_SID, TWILIO_TOKEN);
 
     smsClient.messages.create({
-        body: "hello from yuva",
+        body: "hello from yuva http://localhost:4200/invitations/6387fc517859e7c616e13ba6",
         to: "+528181383038",
         from: "+15738892569"
     }).then((message) => console.log(message.sid));

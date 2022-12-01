@@ -9,6 +9,7 @@ export default class User {
         public lastName: string,
         public email: string,
         public avatar: string,
+        public firebaseID: string,
         public phoneNumber?: string,
         public dateOfBirth?: Date,
         public address?: string,

@@ -57,6 +57,10 @@ export const usersValidator = {
                     bsonType: "string",
                     description: "'email' is required and is a string"
                 },
+                firebaseID: {
+                    bsonType: "string",
+                    description: "'firebaseID' is required and is a string"
+                },
                 phoneNumber: {
                     bsonType: "string",
                     description: "'string' is required and is a string"

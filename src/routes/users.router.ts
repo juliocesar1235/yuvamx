@@ -69,7 +69,7 @@ usersRouter.post("/", async (req: Request, res: Response) => {
         const result = await collections.users.insertOne(newUser);
         console.log(result, "New user created successfully");
         result
-            ? res.status(201).send(result)
+            ? res.status(201).send(result.insertedId)
             : res.status(500).send("Failed to create a new user.");
     } catch (error) {
         console.error(error);
