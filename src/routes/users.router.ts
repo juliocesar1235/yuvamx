@@ -95,13 +95,11 @@ usersRouter.put("/:id", async (req: Request, res: Response) => {
         }
 
         if (updatedUser.favoriteServices) {
-            let favArray: Array<ObjectId> = [];
-            let updateResult = []
-            updatedUser.favoriteServices.forEach(async (serviceId) => {
-                let objId = new ObjectId(serviceId);
-                updateResult.push(await collections.users.updateOne(query, { $addToSet: { favoriteServices: objId } }));
+            updatedUser.favoriteServices.map(service => new ObjectId(service))
+            await collections.users.updateOne(query, {
+                $set: { "favoriteServices": updatedUser.favoriteServices }
             })
-            console.log('updated services', updateResult);
+            console.log('updated services', updatedUser.favoriteServices);
             delete updatedUser.favoriteServices
         }
         const result = await collections.users.updateOne(query, { $set: updatedUser });
