@@ -26,6 +26,6 @@ export default class User {
         public rating?: number,
         public idProvider?: string,
         public favoriteServices?: Array<ObjectId>,
-        public id?: ObjectId,
+        public _id?: ObjectId,
     ) { }
 }

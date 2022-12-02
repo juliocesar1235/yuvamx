@@ -31,7 +31,7 @@ invitationRouter.get("/:id", async (req: Request, res: Response) => {
         console.log('Invitation find', invitation)
 
         if (invitation) {
-            console.log(`invitation data send: ${invitation.id}`)
+            console.log(`invitation data send: ${invitation._id}`)
             res.status(200).send(invitation);
         }
     } catch (error) {
@@ -63,7 +63,16 @@ invitationRouter.put("/:id", async (req: Request, res: Response) => {
         const query = { _id: new ObjectId(id) };
 
         const result = await collections.invitations.updateOne(query, { $set: updatedInvitation });
+        // console.log(updatedInvitation, 'invitation');
+        if (updatedInvitation.inviteConfirmation === 'accepted') {
+            console.log(updatedInvitation)
+            await collections.allocations.updateOne(
+                { _id: new ObjectId(updatedInvitation.allocationId) },
+                { $set: { serviceStatus: "confirmed", confirmedEmployeeId: new ObjectId(updatedInvitation.employeeId) } });
+        }
+        // if (updatedInvitation.inviteConfirmation === "rejected") {
 
+        // }
         result
             ? res.status(200).send(`Successfully updated invitation with id ${id}`)
             : res.status(304).send(`Service with id: ${id} not updated`);

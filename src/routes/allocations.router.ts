@@ -26,15 +26,12 @@ allocationsRouter.get("/:id", async (req: Request, res: Response) => {
     const id = req?.params?.id;
 
     try {
-
+        console.log(id, 'allo');
         const query = { _id: new ObjectId(id) };
         const allocation: Allocation = await collections.allocations.findOne<Allocation>(query);
         console.log('Allocation find', allocation)
+        res.status(200).send(allocation);
 
-        if (allocation) {
-            console.log(`Sending allocation:`, allocation._id.toString())
-            res.status(200).send(allocation);
-        }
     } catch (error) {
         res.status(404).send(`Unable to find matching allocation with id: ${req.params.id}`);
     }
@@ -118,7 +115,11 @@ allocationsRouter.get("/allocation-match/:id", async (req: Request, res: Respons
         const query = { _id: new ObjectId(id) };
         const allocation: Allocation = await collections.allocations.findOne<Allocation>(query);
         if (!allocation.tentativeEmployeeId) {
-            findTentativeEmployee(allocation.confirmedServiceDate, allocation.rejectedEmployees);
+            console.log('match core', allocation)
+            if (allocation.rejectedEmployees === undefined) {
+                allocation.rejectedEmployees = [];
+            }
+            findTentativeEmployee(allocation);
         }
         res.status(200).send(allocation);
     } catch (error) {

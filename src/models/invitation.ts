@@ -6,6 +6,7 @@ export default class Invitation {
     constructor(
         public contractorId: ObjectId,
         public contractorName: string,
+        public allocationId: ObjectId,
         public employeeId: ObjectId,
         public employeeName: string,
         public employeePhoneNumber: string,
@@ -16,6 +17,6 @@ export default class Invitation {
         public serviceAddress: string,
         public cost: number,
         public inviteConfirmation?: string,
-        public id?: ObjectId
+        public _id?: ObjectId
     ) { }
 }
