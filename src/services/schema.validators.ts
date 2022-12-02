@@ -41,7 +41,7 @@ export const usersValidator = {
     "validator": {
         $jsonSchema: {
             bsonType: "object",
-            required: ["firstName", "lastName", "email", "firebaseId"],
+            required: ["firstName", "lastName", "email", "firebaseID"],
             additionalProperties: false,
             properties: {
                 _id: {},
@@ -57,6 +57,10 @@ export const usersValidator = {
                     bsonType: "string",
                     description: "'email' is required and is a string"
                 },
+                firebaseID: {
+                    bsonType: "string",
+                    description: "'firebaseId' is required and is a string"
+                },
                 phoneNumber: {
                     bsonType: "string",
                     description: "'string' is required and is a string"
@@ -68,11 +72,8 @@ export const usersValidator = {
                 avatar: {
                     bsonType: "string",
                     description: "'avatar' is required and is a string"
-                }, 
-                firebaseId: {
-                    bsonType: "string",
-                    description: "'firebaseId' is required and is a string"
-                },
+                }
+                ,
                 address: {
                     bsonType: "string",
                     description: "'address' is required and is a string"
