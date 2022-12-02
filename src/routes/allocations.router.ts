@@ -13,7 +13,7 @@ allocationsRouter.use(express.json());
 // GET
 allocationsRouter.get("/", async (_req: Request, res: Response) => {
     try {
-        const allocations: Allocation[] = (await collections.allocations.find<Allocation>({}).toArray());
+        const allocations: Allocation[] = (await collections.allocations.find<Allocation>({}).sort({ _id: 1 }).toArray());
         console.log(`Allocations retrieved successfully, total of allocations: ${allocations.length}`)
 
         res.status(200).send(allocations);
@@ -114,11 +114,11 @@ allocationsRouter.get("/allocation-match/:id", async (req: Request, res: Respons
     try {
         const query = { _id: new ObjectId(id) };
         const allocation: Allocation = await collections.allocations.findOne<Allocation>(query);
+        if (!allocation.rejectedEmployees) {
+            allocation.rejectedEmployees = [];
+            await collections.allocations.updateOne({ _id: allocation._id }, { $set: { "rejectedEmployees": [] } })
+        }
         if (!allocation.tentativeEmployeeId) {
-            console.log('match core', allocation)
-            if (allocation.rejectedEmployees === undefined) {
-                allocation.rejectedEmployees = [];
-            }
             findTentativeEmployee(allocation);
         }
         res.status(200).send(allocation);
@@ -144,7 +144,7 @@ allocationsRouter.get("/history/:userid/:type", async (req: Request, res: Respon
         query = { contractorId: new ObjectId(id) };
     }
     try {
-        const allocation: Array<Allocation> = await collections.allocations.find<Allocation>(query).toArray();
+        const allocation: Array<Allocation> = await collections.allocations.find<Allocation>(query).sort({ _id: -1 }).toArray();
         console.log('Allocation find', allocation)
 
         if (allocation) {

@@ -69,10 +69,20 @@ invitationRouter.put("/:id", async (req: Request, res: Response) => {
             await collections.allocations.updateOne(
                 { _id: new ObjectId(updatedInvitation.allocationId) },
                 { $set: { serviceStatus: "confirmed", confirmedEmployeeId: new ObjectId(updatedInvitation.employeeId) } });
+            await collections.users.updateOne(
+                { _id: new ObjectId(updatedInvitation.employeeId) },
+                { $push: { "workScheduleTaken": new Date(updatedInvitation.confirmedServiceDate) } }
+            );
         }
-        // if (updatedInvitation.inviteConfirmation === "rejected") {
-
-        // }
+        if (updatedInvitation.inviteConfirmation === "rejected") {
+            const updatedAllocation = await collections.allocations.updateOne(
+                { _id: new ObjectId(updatedInvitation.allocationId) },
+                {
+                    $push: { "rejectedEmployees": new ObjectId(updatedInvitation.employeeId) },
+                    $unset: { tentativeEmployeeId: "" }
+                });
+            console.log(updatedAllocation, 'update rejected');
+        }
         result
             ? res.status(200).send(`Successfully updated invitation with id ${id}`)
             : res.status(304).send(`Service with id: ${id} not updated`);

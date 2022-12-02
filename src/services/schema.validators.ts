@@ -184,8 +184,8 @@ export const allocationValidator = {
                     description: "'rating' is required and is a double"
                 },
                 cost: {
-                    bsonType: "double",
-                    description: "'cost' is required and is a double"
+                    bsonType: "number",
+                    description: "'cost' is required and is a number"
                 },
                 favorite: {
                     bsonType: "bool",

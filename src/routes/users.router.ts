@@ -66,6 +66,10 @@ usersRouter.post("/", async (req: Request, res: Response) => {
         if (newUser.serviceId) {
             newUser.serviceId = new ObjectId(newUser.serviceId);
         }
+        if (newUser.userType === "employee") {
+            newUser.workScheduleAvailable = [];
+            newUser.workScheduleTaken = [];
+        }
         const result = await collections.users.insertOne(newUser);
         console.log(result, "New user created successfully");
         result
