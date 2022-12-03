@@ -39,7 +39,7 @@ export async function findTentativeEmployee(allocation: Allocation) {
         console.log('sending invitation...');
         smsClient.messages.create({
             body: "Un nuevo servicio solicitado, ¿te gustaría aceptarlo? http://localhost:4200/invitation/" + invitation.insertedId,
-            to: tentativeEmployee.phoneNumber.length === 10 ? "+528181383038" : "+52" + tentativeEmployee.phoneNumber,
+            to: tentativeEmployee.phoneNumber.length !== 10 ? "+528181383038" : "+52" + tentativeEmployee.phoneNumber,
             from: "+15738892569"
         }).then((message) => console.log('invitation send' + message.sid));
 
